@@ -46,15 +46,15 @@ public class Main {
     private static boolean comNumEqualsUserNum(int[] computerNum, int[] userNum, boolean gameStart) {
         int strike = 0;
         int ball = 0;
-//        strike = strikeAndBall(computerNum, userNum, strike, ball);
-        if (strikeAndBall(computerNum, userNum, strike, ball) == 3) {
+//        strike = checkStrikeAndBall(computerNum, userNum, strike, ball);
+        if (checkStrikeAndBall(computerNum, userNum, strike, ball) == 3) {
             System.out.println("세자리 숫자를 모두 맞췄습니다.");
             gameStart = false;
         }
         return gameStart;
     }
 
-    private static int strikeAndBall(int[] computerNum, int[] userNum, int strike, int ball) {
+    private static int checkStrikeAndBall(int[] computerNum, int[] userNum, int strike, int ball) {
         for (int i = 0; i < computerNum.length; i++) {
             if (computerNum[i] == userNum[i]) {
                 strike++;
