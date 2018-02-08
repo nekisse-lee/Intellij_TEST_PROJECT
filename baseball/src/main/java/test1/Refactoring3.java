@@ -2,7 +2,7 @@ package test1;
 
 import java.util.Scanner;
 
-public class Refactoring {
+public class Refactoring3 {
     public static void main(String[] args) {
 
         createUserNum();
