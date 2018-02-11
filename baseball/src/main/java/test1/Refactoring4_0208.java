@@ -1,8 +1,10 @@
 package test1;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Refactoring4_0208 {
+
     public static void main(String[] args) {
 
 
@@ -18,7 +20,9 @@ public class Refactoring4_0208 {
         while (start) {
             int[] userNum = createUserInputNum();
            start = countStrikeAndBall(comNum, userNum);
-
+            //GameResult = c;
+            // gameResult.print();
+            // start = gameResult.isDone();
         }
     }
 
@@ -58,6 +62,24 @@ public class Refactoring4_0208 {
 //        return true;
 //    }
 
+    private static GameResult countStrikeAndBall(List<Integer> computerNum, List<Integer> userNum) {
+        GameResult gameResult = new GameResult();
+        for(int i=0; i < computerNum.size(); i++) {
+            checkResult(userNum, computerNum.get(i), i, gameResult);
+        }
+        return gameResult;
+    }
+
+    private static void checkResult(List<Integer> userNum, Integer comNum, Integer comIndex, GameResult gameResult) {
+        if(!userNum.contains(comNum)) {
+            return;
+        }
+        if(userNum.indexOf(comNum) == comIndex) {
+            gameResult.increaseStrike();
+            return;
+        }
+        gameResult.increaseBall();
+    }
 
     //컴퓨터숫자와 유저숫자를 비교해 볼과 카운트를 구한다
     private static boolean countStrikeAndBall(int[] computerNum, int[] userNum) {
@@ -76,11 +98,12 @@ public class Refactoring4_0208 {
     //볼 카운트
     private static int countBall(int[] computerNum, int[] userNum) {
         int ball = 0;
+
         for (int i = 0; i < computerNum.length; i++) {
             for (int j = 0; j <userNum.length;j++)
-            if (computerNum[i] == userNum[j] && i != j) {
-                ball++;
-            }
+                if (computerNum[i] == userNum[j] && i != j) {
+                    ball++;
+                }
         }
         System.out.println(ball+"볼");
         return ball;
@@ -119,5 +142,18 @@ public class Refactoring4_0208 {
             return false;
         }
         return true;
+    }
+
+    private static class GameResult {
+        private int strike;
+        private int ball;
+
+        public void increaseStrike() {
+            this.strike++;
+        }
+
+        public void increaseBall() {
+            this.ball++;
+        }
     }
 }
