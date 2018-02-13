@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Refactoring4_0209 {
+public class Refactoring4_0213 {
 
     public static void main(String[] args) {
 
@@ -26,29 +26,22 @@ public class Refactoring4_0209 {
         }
     }
 
+
+
+
     //컴퓨터의 랜덤 3자리 숫자를 만든다
     private static List<Integer> createComNum() {
         List<Integer> computerNum = new ArrayList<Integer>();
-        while (computerNum.size() < 3) {
+        for (int i = 0 ; i <= 3; i++) {
             int randomNum = (int) (Math.random() * 9) + 1;
-            if(computerNum.contains(randomNum)) {
-                continue;
+            if(!computerNum.contains(randomNum)) {
+                computerNum.add(randomNum);
             }
-            computerNum.add(randomNum);
         }
         System.out.println("정답   " + computerNum.get(0) + " " + computerNum.get(1) + " " + computerNum.get(2));
         return computerNum;
     }
 
-
-    private static List<Integer> inputUserNum() {
-        List<Integer> userNum = null;
-        while(userNum == null || userNum.size() != 3) {
-            System.out.println("3자리의 숫자를 입력해주세요.");
-            userNum = createUserInputNum();
-        }
-        return userNum;
-    }
 
     //유저 숫자를 입력받는 메서드
     private static List<Integer> createUserInputNum() {
@@ -58,11 +51,20 @@ public class Refactoring4_0209 {
         for (int i = 0; i < input.length(); i++) {
             userNum.add(Integer.valueOf((String.valueOf(input.charAt(i)))));
         }
-        System.out.println("입력값 : ");
+        System.out.print("입력값 :    ");
         for(Integer num : userNum) {
             System.out.print(num);
         }
         System.out.println();
+        return userNum;
+    }
+
+    private static List<Integer> inputUserNum() {
+        List<Integer> userNum = null;
+        while(userNum == null || userNum.size() != 3) {
+            System.out.println("3자리의 숫자를 입력해주세요.");
+            userNum = createUserInputNum();
+        }
         return userNum;
     }
 

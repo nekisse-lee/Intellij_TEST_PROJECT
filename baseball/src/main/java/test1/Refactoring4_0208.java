@@ -1,10 +1,8 @@
 package test1;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class Refactoring4_0208 {
-
     public static void main(String[] args) {
 
 
@@ -19,11 +17,9 @@ public class Refactoring4_0208 {
         int[] comNum =createComNum();
         while (start) {
             int[] userNum = createUserInputNum();
-           start = countStrikeAndBall(comNum, userNum);
-            //GameResult = c;
-            // gameResult.print();
-            // start = gameResult.isDone();
+            start = countStrikeAndBall(comNum, userNum);
         }
+        System.out.println("세자리 숫자를 모두 맞췄습니다.");
     }
 
 
@@ -42,43 +38,31 @@ public class Refactoring4_0208 {
 
 
     //유저 숫자를 입력받는 메서드
-    private static int[] createUserInputNum() {
-        int[] userNum = new int[3];
-        Scanner scanner = new Scanner(System.in);
-        for (int i = 0; i < userNum.length; i++) {
-            System.out.println((i + 1) + "번째 숫자를 입력해 주세요");
-            userNum[i] = scanner.nextInt();
-        }
-        System.out.println("유저값   " + userNum[0] + " " + userNum[1] + " " + userNum[2]);
-        return userNum;
-    }
-
-    //  컴퓨터 숫자와 유저숫자를 비교, strike와 ball을 알려주는 메서드
-//    private static boolean compareComputerNumAndUserNum(int[] computerNum, int[] userNum) {
-//        if (countStrike(computerNum,userNum) == 3) {
-//            System.out.println("세자리 숫자를 모두 맞췄습니다.");
-//            return false;
+//    private static int[] createUserInputNum() {
+//        int[] userNum = new int[3];
+//        Scanner scanner = new Scanner(System.in);
+//        for (int i = 0; i < userNum.length; i++) {
+//            System.out.println((i + 1) + "번째 숫자를 입력해 주세요");
+//            userNum[i] = scanner.nextInt();
 //        }
-//        return true;
+//        System.out.println("유저값   " + userNum[0] + " " + userNum[1] + " " + userNum[2]);
+//        return userNum;
 //    }
 
-    private static GameResult countStrikeAndBall(List<Integer> computerNum, List<Integer> userNum) {
-        GameResult gameResult = new GameResult();
-        for(int i=0; i < computerNum.size(); i++) {
-            checkResult(userNum, computerNum.get(i), i, gameResult);
+    //유저 숫자를 입력받는 메서드
+    private static int[] createUserInputNum() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("숫자를 입력하세요");
+        String input = String.valueOf(Integer.parseInt(scanner.nextLine()));
+        int[] userNum = new int[input.length()];
+        if (input.length()== 3) {
+            for (int i = 0; i < input.length(); i++) {
+                userNum[i] = input.charAt(i) - '0';
+            }
         }
-        return gameResult;
-    }
 
-    private static void checkResult(List<Integer> userNum, Integer comNum, Integer comIndex, GameResult gameResult) {
-        if(!userNum.contains(comNum)) {
-            return;
-        }
-        if(userNum.indexOf(comNum) == comIndex) {
-            gameResult.increaseStrike();
-            return;
-        }
-        gameResult.increaseBall();
+        System.out.print("유저입력값   " + userNum[0]+userNum[1]+userNum[2]+ "  ");
+        return userNum;
     }
 
     //컴퓨터숫자와 유저숫자를 비교해 볼과 카운트를 구한다
@@ -87,8 +71,8 @@ public class Refactoring4_0208 {
         int ball = countBall(computerNum,userNum);
         if (strike == 0 && ball == 0) {
             System.out.println("낫싱");
-        } else if (strike == 3) {
-            System.out.println("세자리 숫자를 모두 맞췄습니다.");
+        }
+        if (strike == 3) {
             return false;
         }
         return true;
@@ -98,14 +82,13 @@ public class Refactoring4_0208 {
     //볼 카운트
     private static int countBall(int[] computerNum, int[] userNum) {
         int ball = 0;
-
         for (int i = 0; i < computerNum.length; i++) {
             for (int j = 0; j <userNum.length;j++)
                 if (computerNum[i] == userNum[j] && i != j) {
                     ball++;
                 }
         }
-        System.out.println(ball+"볼");
+        System.out.println(ball + "볼");
         return ball;
     }
 
@@ -118,23 +101,13 @@ public class Refactoring4_0208 {
                 strike++;
             }
         }
-        System.out.println(strike+"스트라이크 ");
-            return strike;
+        System.out.print(strike + "스트라이크  ");
+        return strike;
     }
 
 
 
-//    private static int countBall(int i, int[] userNum) {
-//        int ball = 0;
-//        for (int j = 0; j < userNum.length; j++) {
-//            if (i == userNum[j]) {
-//                ball++;
-//            }
-//        }
-//        return ball;
-//    }
-
-       //컴퓨터의 숫자 중복체크
+    //컴퓨터의 숫자 중복체크
     private static boolean checkRandomNum(int[] computerNum) {
         if (computerNum[0] != computerNum[1] && computerNum[0] != computerNum[2] && computerNum[1] != computerNum[2]) {
             System.out.println("컴퓨터값  " + computerNum[0] + " " + computerNum[1] + " " + computerNum[2]);
@@ -142,18 +115,5 @@ public class Refactoring4_0208 {
             return false;
         }
         return true;
-    }
-
-    private static class GameResult {
-        private int strike;
-        private int ball;
-
-        public void increaseStrike() {
-            this.strike++;
-        }
-
-        public void increaseBall() {
-            this.ball++;
-        }
     }
 }
