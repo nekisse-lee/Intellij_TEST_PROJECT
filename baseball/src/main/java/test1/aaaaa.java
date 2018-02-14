@@ -2,7 +2,7 @@ package test1;
 
 import java.util.Scanner;
 
-public class Refactoring4_0208 {
+public class aaaaa {
     public static void main(String[] args) {
 
 
@@ -18,8 +18,8 @@ public class Refactoring4_0208 {
         while (start) {
             int[] userNum = createUserInputNum();
             start = countStrikeAndBall(comNum, userNum);
+
         }
-        System.out.println("세자리 숫자를 모두 맞췄습니다.");
     }
 
 
@@ -38,30 +38,14 @@ public class Refactoring4_0208 {
 
 
     //유저 숫자를 입력받는 메서드
-//    private static int[] createUserInputNum() {
-//        int[] userNum = new int[3];
-//        Scanner scanner = new Scanner(System.in);
-//        for (int i = 0; i < userNum.length; i++) {
-//            System.out.println((i + 1) + "번째 숫자를 입력해 주세요");
-//            userNum[i] = scanner.nextInt();
-//        }
-//        System.out.println("유저값   " + userNum[0] + " " + userNum[1] + " " + userNum[2]);
-//        return userNum;
-//    }
-
-    //유저 숫자를 입력받는 메서드
     private static int[] createUserInputNum() {
+        int[] userNum = new int[3];
         Scanner scanner = new Scanner(System.in);
-        System.out.println("숫자를 입력하세요");
-        String input = String.valueOf(Integer.parseInt(scanner.nextLine()));
-        int[] userNum = new int[input.length()];
-        if (input.length()== 3) {
-            for (int i = 0; i < input.length(); i++) {
-                userNum[i] = input.charAt(i) - '0';
-            }
+        for (int i = 0; i < userNum.length; i++) {
+            System.out.println((i + 1) + "번째 숫자를 입력해 주세요");
+            userNum[i] = scanner.nextInt();
         }
-
-        System.out.print("유저입력값   " + userNum[0]+userNum[1]+userNum[2]+ "  ");
+        System.out.println("유저값   " + userNum[0] + " " + userNum[1] + " " + userNum[2]);
         return userNum;
     }
 
@@ -69,10 +53,9 @@ public class Refactoring4_0208 {
     private static boolean countStrikeAndBall(int[] computerNum, int[] userNum) {
         int strike = countStrike(computerNum,userNum);
         int ball = countBall(computerNum,userNum);
-        if (strike == 0 && ball == 0) {
-            System.out.println("낫싱");
-        }
+        System.out.println(strike + "스트라이크  " + ball + "볼");
         if (strike == 3) {
+            System.out.println("세자리 숫자를 모두 맞췄습니다.");
             return false;
         }
         return true;
@@ -88,7 +71,6 @@ public class Refactoring4_0208 {
                     ball++;
                 }
         }
-        System.out.println(ball + "볼");
         return ball;
     }
 
@@ -101,7 +83,6 @@ public class Refactoring4_0208 {
                 strike++;
             }
         }
-        System.out.print(strike + "스트라이크  ");
         return strike;
     }
 

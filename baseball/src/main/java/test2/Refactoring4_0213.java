@@ -1,4 +1,4 @@
-package test1;
+package test2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +25,6 @@ public class Refactoring4_0213 {
             gameResult.print();
         }
     }
-
-
-
 
     //컴퓨터의 랜덤 3자리 숫자를 만든다
     private static List<Integer> createComNum() {
