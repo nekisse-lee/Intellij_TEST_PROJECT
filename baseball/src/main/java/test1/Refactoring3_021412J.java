@@ -2,17 +2,12 @@ package test1;
 
 import java.util.Scanner;
 
-public class Refactoring3_0214 {
+public class Refactoring3_021412J {
 
     private static final int GAME_INPUT_LENGTH = 3;
-    private static String str;
-
 
     public static void main(String[] args) {
-
-
         gameStart();
-
     }
 
 
@@ -48,30 +43,30 @@ public class Refactoring3_0214 {
 
     //유저 숫자 만들기
     private static int[] createUserNum() {
-        int[] userNum = inputUserNum();
-
-        while (userNum == null || userNum.length != GAME_INPUT_LENGTH) {
-            System.out.println("3자리 숫자를 입력하세요");
-            userNum = inputUserNum();
+        String userInput = String.valueOf(Integer.parseInt(inputUserNum()));
+        int[] userNum = new int[userInput.length()];
+        for (int i = 0; i < userInput.length(); i++) {
+            userNum[i] = userInput.charAt(i) - '0';
         }
         return userNum;
     }
 
+    private static boolean isGameInputLength(String userNum) {
+        return userNum != null && userNum.length() == GAME_INPUT_LENGTH;
+    }
+
 
     //유저 숫자를 입력받는다
-    private static int[] inputUserNum() {
+    private static String inputUserNum() {
         Scanner scanner = new Scanner(System.in);
-        str = scanner.nextLine();
-        if (isNumeric(str)) {
-            String input = String.valueOf(Integer.parseInt(str));
-            int[] userNum = new int[input.length()];
-            for (int i = 0; i < input.length(); i++) {
-                userNum[i] = input.charAt(i) - '0';
-            }
-            return userNum;
-        }
-        return createUserNum();
+        String userInput;
+        do {
+            System.out.println("3자리 숫자를 입력하세요");
+            userInput = scanner.nextLine();
+        }while (!isGameInputLength(userInput) || !isNumeric(userInput));
+        return userInput;
     }
+
 
     private static boolean isNumeric(String str) {
         try {
@@ -82,9 +77,6 @@ public class Refactoring3_0214 {
         }
         return true;
     }
-
-
-
 
     //컴퓨터숫자와 유저숫자를 비교해 볼과 카운트를 구한다
     private static boolean countStrikeAndBall(int[] computerNum, int[] userNum) {
