@@ -2,7 +2,7 @@ package test1;
 
 import java.util.Scanner;
 
-public class Refactoring3_0216_1 {
+public class Refactoring3_0218 {
 
     private static final int GAME_INPUT_LENGTH = 3;
 
@@ -17,7 +17,7 @@ public class Refactoring3_0216_1 {
         int[] comNum = createComNum();
         while (doing) {
             int[] userNum = createUserNum();
-            doing = countStrikeAndBall(comNum, userNum);
+            doing = countStrikeAndBall2(comNum, userNum);
         }
         System.out.println("세자리 숫자를 모두 맞췄습니다.");
     }
@@ -130,6 +130,25 @@ public class Refactoring3_0216_1 {
             }
         }
         return strike;
+    }
+
+    private static boolean countStrikeAndBall2(int[] computerNum, int[] userNum) {
+        int strike = 0;
+        int ball = 0;
+        for (int i = 0; i<computerNum.length; i++) {
+            if (computerNum[i] == userNum[i]) {
+                strike++;
+            } else {
+                for(int k=0;k<3;k++){
+
+                    if (i[j] == Check[k]){
+
+                        Ball += 1;
+
+                        ball++;
+            }
+        }
+        return result(strike, ball);
     }
 
     //컴퓨터의 숫자 중복값 체크

@@ -16,7 +16,7 @@ public class Refactoring4_0213_1 {
 
     // 게임 시작 메서드
     private static void gameStart() {
-        List<Integer> comNum =createComNum();
+        List<Integer> comNum = createComNum();
         GameResult gameResult = new GameResult();
         while (!gameResult.isDone()) {
             gameResult.clear();
@@ -29,9 +29,9 @@ public class Refactoring4_0213_1 {
     //컴퓨터의 랜덤 3자리 숫자를 만든다
     private static List<Integer> createComNum() {
         List<Integer> computerNum = new ArrayList<Integer>();
-        for (int i = 0 ; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             int randomNum = (int) (Math.random() * 9) + 1;
-            if(!computerNum.contains(randomNum)) {
+            if (!computerNum.contains(randomNum)) {
                 computerNum.add(randomNum);
             }
         }
@@ -40,16 +40,17 @@ public class Refactoring4_0213_1 {
     }
 
 
-    //유저 숫자를 입력받는 메서드
+    //유저 숫자를 만드는 메서드 -> inputUserNum()
     private static List<Integer> createUserNum() {
         List<Integer> userNum = null;
-        while(userNum == null || userNum.size() != 3) {
+        while (userNum == null || userNum.size() != 3) {
             System.out.println("3자리의 숫자를 입력해주세요.");
             userNum = inputUserNum();
         }
         return userNum;
     }
 
+    //유저 숫자를 입력받는메서드
     private static List<Integer> inputUserNum() {
         List<Integer> userNum = new ArrayList<Integer>();
         Scanner scanner = new Scanner(System.in);
@@ -63,34 +64,31 @@ public class Refactoring4_0213_1 {
 
     private static void printUserNum(List<Integer> userNum) {
         System.out.print("입력값 :    ");
-        for(Integer num : userNum) {
+        for (Integer num : userNum) {
             System.out.print(num);
         }
         System.out.println();
     }
 
 
-    private static GameResult countStrikeAndBall(
-            List<Integer> computerNum, List<Integer> userNum, GameResult gameResult) {
-        for(int i=0; i < computerNum.size(); i++) {
+    private static GameResult countStrikeAndBall(List<Integer> computerNum, List<Integer> userNum, GameResult gameResult) {
+        for (int i = 0; i < computerNum.size(); i++) {
             checkResult(userNum, computerNum.get(i), i, gameResult);
         }
         return gameResult;
     }
 
 
-
     private static void checkResult(List<Integer> userNum, Integer comNum, Integer comIndex, GameResult gameResult) {
-        if(!userNum.contains(comNum)) {
+        if (!userNum.contains(comNum)) {
             return;
         }
-        if(userNum.indexOf(comNum) == comIndex) {
+        if (userNum.indexOf(comNum) == comIndex) {
             gameResult.increaseStrike();
             return;
         }
         gameResult.increaseBall();
     }
-
 
 
     private static class GameResult {

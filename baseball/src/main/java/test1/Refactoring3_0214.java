@@ -3,11 +3,6 @@ package test1;
 import java.util.Scanner;
 
 public class Refactoring3_0214 {
-
-    private static final int GAME_INPUT_LENGTH = 3;
-    private static String str;
-
-
     public static void main(String[] args) {
 
 
@@ -30,27 +25,22 @@ public class Refactoring3_0214 {
 
     //컴퓨터의 랜덤 3자리 숫자를 만든다
     private static int[] createComNum() {
-        int[] computerNum = new int[GAME_INPUT_LENGTH];
+        int[] computerNum = new int[3];
         boolean randomNum = true;
         while (randomNum) {
-            for (int i = 0; i < GAME_INPUT_LENGTH; i++) {
-                computerNum[i] = getRandomNumeric();
+            for (int i = 0; i < computerNum.length; i++) {
+                computerNum[i] = (int) (Math.random() * 9) + 1;
             }
             randomNum = checkRandomNum(computerNum);
         }
         return computerNum;
     }
 
-    private static int getRandomNumeric() {
-        return (int) (Math.random() * 9) + 1;
-    }
-
 
     //유저 숫자 만들기
     private static int[] createUserNum() {
         int[] userNum = inputUserNum();
-
-        while (userNum == null || userNum.length != GAME_INPUT_LENGTH) {
+        while (userNum.length != 3 || userNum == null) {
             System.out.println("3자리 숫자를 입력하세요");
             userNum = inputUserNum();
         }
@@ -61,30 +51,13 @@ public class Refactoring3_0214 {
     //유저 숫자를 입력받는다
     private static int[] inputUserNum() {
         Scanner scanner = new Scanner(System.in);
-        str = scanner.nextLine();
-        if (isNumeric(str)) {
-            String input = String.valueOf(Integer.parseInt(str));
-            int[] userNum = new int[input.length()];
-            for (int i = 0; i < input.length(); i++) {
-                userNum[i] = input.charAt(i) - '0';
-            }
-            return userNum;
+        String input = String.valueOf(Integer.parseInt(scanner.nextLine()));
+        int[] userNum = new int[input.length()];
+        for (int i = 0; i < input.length(); i++) {
+            userNum[i] = input.charAt(i) - '0';
         }
-        return createUserNum();
+        return userNum;
     }
-
-    private static boolean isNumeric(String str) {
-        try {
-            Integer.parseInt(String.valueOf(str));
-        } catch (NumberFormatException nfe) {
-            System.out.println("공백 또는 문자는 입력 불가능합니다. 3자리 숫자만 입력해 주세요");
-            return false;
-        }
-        return true;
-    }
-
-
-
 
     //컴퓨터숫자와 유저숫자를 비교해 볼과 카운트를 구한다
     private static boolean countStrikeAndBall(int[] computerNum, int[] userNum) {
