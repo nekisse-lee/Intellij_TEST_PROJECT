@@ -1,8 +1,7 @@
-package test1;
 
 import java.util.Scanner;
 
-public class Refactoring3_0216_1 {
+public class MainBaseball {
 
     private static final int GAME_INPUT_LENGTH = 3;
 
@@ -58,7 +57,7 @@ public class Refactoring3_0216_1 {
         do {
             System.out.println("3자리 숫자를 입력하세요 ex) 123");
             userInput = scanner.nextLine();
-        }while (!isGameInputLength(userInput) || !isNumeric(userInput));
+        } while (!isGameInputLength(userInput) || !isNumeric(userInput));
         return userInput;
     }
 
@@ -67,7 +66,7 @@ public class Refactoring3_0216_1 {
         if (userNum != null && userNum.length() == GAME_INPUT_LENGTH) {
             return true;
         }
-        System.out.println("자리수");
+//        System.out.println("잘못된 입력입니다.");
         return false;
     }
 
@@ -76,14 +75,14 @@ public class Refactoring3_0216_1 {
         try {
             Integer.parseInt(String.valueOf(str));
         } catch (NumberFormatException nfe) {
-            errorPrintln();
+//            errorPrintln();
             return false;
         }
         return true;
     }
 
     private static void errorPrintln() {
-        System.out.println("공백, 문자는 입력 불가능합니다. 3자리 숫자만 입력해 주세요");
+        System.out.println("잘못된 입력입니다.");
     }
 
 
@@ -98,7 +97,7 @@ public class Refactoring3_0216_1 {
     private static boolean result(int strike, int ball) {
         if (strike == 0 && ball == 0) {
             System.out.println("낫싱");
-        }else {
+        } else {
             System.out.println(strike + "스트라이크 " + ball + "볼");
         }
         if (strike == 3) {

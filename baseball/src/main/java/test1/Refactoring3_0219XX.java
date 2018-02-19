@@ -2,7 +2,7 @@ package test1;
 
 import java.util.Scanner;
 
-public class Refactoring3_0216_1 {
+public class Refactoring3_0219XX {
 
     private static final int GAME_INPUT_LENGTH = 3;
 
@@ -43,7 +43,7 @@ public class Refactoring3_0216_1 {
 
     //유저 숫자를 만드는 메서드  , 입력받는 메서드실행
     private static int[] createUserNum() {
-        String userInput = String.valueOf(Integer.parseInt(inputUserNum()));
+        String userInput = inputUserNum();
         int[] userNum = new int[userInput.length()];
         for (int i = 0; i < userInput.length(); i++) {
             userNum[i] = userInput.charAt(i) - '0';
@@ -67,7 +67,7 @@ public class Refactoring3_0216_1 {
         if (userNum != null && userNum.length() == GAME_INPUT_LENGTH) {
             return true;
         }
-        System.out.println("자리수");
+//        System.out.println("null, 자릿수");
         return false;
     }
 
@@ -76,7 +76,6 @@ public class Refactoring3_0216_1 {
         try {
             Integer.parseInt(String.valueOf(str));
         } catch (NumberFormatException nfe) {
-            errorPrintln();
             return false;
         }
         return true;
@@ -121,6 +120,7 @@ public class Refactoring3_0216_1 {
     }
 
 
+
     //스트라이크 카운트
     private static int countStrike(int[] computerNum, int[] userNum) {
         int strike = 0;
@@ -130,6 +130,30 @@ public class Refactoring3_0216_1 {
             }
         }
         return strike;
+    }
+
+    private static String result(int[] comNum, int[] userNum) {
+        int strike =0;
+        int ball = 0;
+        for (int i = 0; i < userNum.length; i++) {
+            int rs = countSB(comNum, userNum[i], i);
+            if (rs == 2) {
+                strike++;
+            } else if (rs == 1) {
+                ball++;
+            }
+        }
+        return String.format("%d strike, %d ball", strike, ball);
+    }
+
+    private static int countSB(int[] comNum, int userIndex, int i1) {
+        if (comNum[i1] != userIndex) {
+            return 0;
+        }
+        if (comNum[i1] == userIndex) {
+            return 2;
+        }
+        return 1;
     }
 
     //컴퓨터의 숫자 중복값 체크

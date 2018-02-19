@@ -1,101 +1,62 @@
 package test1;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Refactoring3_0218 {
 
-    private static final int GAME_INPUT_LENGTH = 3;
-
     public static void main(String[] args) {
+
+
         gameStart();
+
     }
 
 
     // 게임 시작 메서드
     private static void gameStart() {
         boolean doing = true;
-        int[] comNum = createComNum();
+        List<Integer> comNum = createComNum();
         while (doing) {
-            int[] userNum = createUserNum();
-            doing = countStrikeAndBall2(comNum, userNum);
+            List<Integer> userNum = createUserNum();
+            doing = countStrikeAndBall(comNum, userNum);
         }
-        System.out.println("세자리 숫자를 모두 맞췄습니다.");
+    }
+
+    private static boolean countStrikeAndBall(List<Integer> comNum, List<Integer> userNum) {
+        int ball = countBall(comNum,userNum);
+        int strike = countStrike(comNum,userNum);
+//        for (int i = 0; i < comNum.size(); i++) {
+//            checkResult(userNum, comNum.get(i), i);
+//        }
+        return checkResult(strike,ball);
     }
 
 
-    //컴퓨터의 랜덤 3자리 숫자를 만들고, 검사하는 메서드 실행
-    private static int[] createComNum() {
-        int[] computerNum = new int[GAME_INPUT_LENGTH];
-        boolean isRandomNum = true;
-        while (isRandomNum) {
-            for (int i = 0; i < GAME_INPUT_LENGTH; i++) {
-                computerNum[i] = getRandomNumeric();
+
+
+    private static int countStrike(List<Integer> comNum, List<Integer> userNum) {
+        int strike = 0;
+        for (int i = 0; i < comNum.size(); i++) {
+            if (comNum.get(i).equals(userNum.get(i)))  {
+                strike++;
             }
-            isRandomNum = checkRandomNum(computerNum);
         }
-        return computerNum;
+        return strike;
     }
 
-    private static int getRandomNumeric() {
-        return (int) (Math.random() * 9) + 1;
-    }
-
-
-    //유저 숫자를 만드는 메서드  , 입력받는 메서드실행
-    private static int[] createUserNum() {
-        String userInput = String.valueOf(Integer.parseInt(inputUserNum()));
-        int[] userNum = new int[userInput.length()];
-        for (int i = 0; i < userInput.length(); i++) {
-            userNum[i] = userInput.charAt(i) - '0';
+    private static int countBall(List<Integer> comNum, List<Integer> userNum) {
+        int ball = 0;
+        for (int i = 0; i < userNum.size(); i++) {
+            if ( !comNum.contains(userNum.get(i)))  {
+                ball++;
+            }
         }
-        return userNum;
+        return ball;
     }
 
-    //유저 숫자를 입력받는 메서드, 입력받은 숫자 검사 실행
-    private static String inputUserNum() {
-        Scanner scanner = new Scanner(System.in);
-        String userInput;
-        do {
-            System.out.println("3자리 숫자를 입력하세요 ex) 123");
-            userInput = scanner.nextLine();
-        }while (!isGameInputLength(userInput) || !isNumeric(userInput));
-        return userInput;
-    }
-
-    // 입력받은 값이 숫자라면 자리수 검사
-    private static boolean isGameInputLength(String userNum) {
-        if (userNum != null && userNum.length() == GAME_INPUT_LENGTH) {
-            return true;
-        }
-        System.out.println("dddd");
-        return false;
-    }
-
-    // 입력받은 값을 숫자인지 검사
-    private static boolean isNumeric(String str) {
-        try {
-            Integer.parseInt(String.valueOf(str));
-        } catch (NumberFormatException nfe) {
-            errorPrintln();
-            return false;
-        }
-        return true;
-    }
-
-    private static void errorPrintln() {
-        System.out.println("공백, 문자는 입력 불가능합니다. 3자리 숫자만 입력해 주세요");
-    }
-
-
-    //컴퓨터숫자와 유저숫자를 비교해 볼과 카운트를 구한다
-    private static boolean countStrikeAndBall(int[] computerNum, int[] userNum) {
-        int strike = countStrike(computerNum, userNum);
-        int ball = countBall(computerNum, userNum);
-        return result(strike, ball);
-    }
-
-
-    private static boolean result(int strike, int ball) {
+    private static boolean checkResult(int strike, int ball) {
         if (strike == 0 && ball == 0) {
             System.out.println("낫싱");
         }else {
@@ -108,56 +69,101 @@ public class Refactoring3_0218 {
     }
 
 
-    //볼 카운트
-    private static int countBall(int[] computerNum, int[] userNum) {
-        int ball = 0;
-        for (int i = 0; i < computerNum.length; i++) {
-            for (int j = 0; j < userNum.length; j++)
-                if (computerNum[i] == userNum[j] && i != j) {
-                    ball++;
-                }
-        }
-        return ball;
-    }
 
-
-    //스트라이크 카운트
-    private static int countStrike(int[] computerNum, int[] userNum) {
-        int strike = 0;
-        for (int i = 0; i < computerNum.length; i++) {
-            if (computerNum[i] == userNum[i]) {
-                strike++;
+    //컴퓨터의 랜덤 3자리 숫자를 만든다
+    private static List<Integer> createComNum() {
+        List<Integer> computerNum = new ArrayList<Integer>();
+        for (int i = 0; i < 4; i++) {
+            int randomNum = (int) (Math.random() * 9) + 1;
+            if (!computerNum.contains(randomNum)) {
+                computerNum.add(randomNum);
             }
         }
-        return strike;
+        System.out.println("정답   " + computerNum.get(0) + " " + computerNum.get(1) + " " + computerNum.get(2));
+        return computerNum;
     }
 
-    private static boolean countStrikeAndBall2(int[] computerNum, int[] userNum) {
-        int strike = 0;
-        int ball = 0;
-        for (int i = 0; i<computerNum.length; i++) {
-            if (computerNum[i] == userNum[i]) {
-                strike++;
+
+    //유저 숫자를 만드는 메서드 -> inputUserNum()
+    private static List<Integer> createUserNum() {
+        List<Integer> userNum = null;
+        while (userNum == null || userNum.size() != 3) {
+            System.out.println("3자리의 숫자를 입력해주세요.");
+            userNum = inputUserNum();
+        }
+        return userNum;
+    }
+
+    //유저 숫자를 입력받는메서드
+    private static List<Integer> inputUserNum() {
+        List<Integer> userNum = new ArrayList<Integer>();
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        for (int i = 0; i < input.length(); i++) {
+            userNum.add(Integer.valueOf((String.valueOf(input.charAt(i)))));
+        }
+        printUserNum(userNum);
+        return userNum;
+    }
+
+    private static void printUserNum(List<Integer> userNum) {
+        System.out.print("입력값 :    ");
+        for (Integer num : userNum) {
+            System.out.print(num);
+        }
+        System.out.println();
+    }
+
+
+  /*  private static GameResult countStrikeAndBall(List<Integer> computerNum, List<Integer> userNum, GameResult gameResult) {
+        for (int i = 0; i < computerNum.size(); i++) {
+            checkResult(userNum, computerNum.get(i), i, gameResult);
+        }
+        return gameResult;
+    }
+
+
+    private static void checkResult(List<Integer> userNum, Integer comNum, Integer comIndex, GameResult gameResult) {
+        if (!userNum.contains(comNum)) {
+            return;
+        }
+        if (userNum.indexOf(comNum) == comIndex) {
+            gameResult.increaseStrike();
+            return;
+        }
+        gameResult.increaseBall();
+    }
+
+
+    private static class GameResult {
+        private int strike;
+        private int ball;
+
+        void increaseStrike() {
+            this.strike++;
+        }
+
+        void increaseBall() {
+            this.ball++;
+        }
+
+        void print() {
+            if (strike == 0 && ball == 0) {
+                System.out.println("낫싱");
+            } else if (strike == 3) {
+                System.out.println("세자리 숫자를 모두 맞췄습니다.");
             } else {
-                for(int k=0;k<3;k++){
-
-                    if (i[j] == Check[k]){
-
-                        Ball += 1;
-
-                        ball++;
+                System.out.println(strike + "스트라이크 " + ball + "볼");
             }
         }
-        return result(strike, ball);
-    }
 
-    //컴퓨터의 숫자 중복값 체크
-    private static boolean checkRandomNum(int[] computerNum) {
-        if (computerNum[0] != computerNum[1] && computerNum[0] != computerNum[2] && computerNum[1] != computerNum[2]) {
-            System.out.println("컴퓨터값  " + computerNum[0] + " " + computerNum[1] + " " + computerNum[2]);
-            System.out.println("자릿수 중복 없는 컴퓨터 값 생성");
-            return false;
+        boolean isDone() {
+            return strike == 3;
         }
-        return true;
-    }
+
+        void clear() {
+            this.strike = 0;
+            this.ball = 0;
+        }
+    }*/
 }
